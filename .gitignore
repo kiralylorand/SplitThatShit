@@ -1,0 +1,36 @@
+# Build outputs - exclude all build artifacts
+bin/
+obj/
+publish/
+
+# Large binaries and tools
+tools/
+test/
+
+# Python files (prototypes, not part of main project)
+*.py
+python
+
+# IDE and editor files
+.vs/
+.vscode/
+*.user
+*.suo
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# NuGet packages
+packages/
+*.nupkg
+
+# Visual Studio cache
+.vs/
+
+# Rider
+.idea/
