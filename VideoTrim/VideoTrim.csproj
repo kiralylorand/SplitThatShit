@@ -11,12 +11,5 @@
     <AssemblyTitle>Split That Sh!t</AssemblyTitle>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="..\tools\ffmpeg.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\tools\ffprobe.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+  <!-- ffmpeg/ffprobe are downloaded automatically by ToolDownloader if missing -->
 </Project>
