@@ -7,6 +7,12 @@ publish/
 tools/
 test/
 
+# Installer files (not needed in Git, only in Releases)
+installer/
+
+# Chrome extension (not part of main project)
+chrome-extension/
+
 # Python files (prototypes, not part of main project)
 *.py
 python
@@ -28,9 +34,6 @@ desktop.ini
 # NuGet packages
 packages/
 *.nupkg
-
-# Visual Studio cache
-.vs/
 
 # Rider
 .idea/
