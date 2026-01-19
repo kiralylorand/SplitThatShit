@@ -479,15 +479,21 @@ public sealed class MainForm : Form
             {
                 try
                 {
+                    System.Diagnostics.Debug.WriteLine($"[MainForm] Checking for updates...");
                     var updateInfo = await UpdateChecker.CheckForUpdatesAsync(GitHubOwner, GitHubRepo);
                     if (updateInfo != null)
                     {
+                        System.Diagnostics.Debug.WriteLine($"[MainForm] Update found, showing notification");
                         Invoke(new Action(() => ShowUpdateNotification(updateInfo)));
                     }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[MainForm] No update found");
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // Silent fail - don't show errors if update check fails
+                    System.Diagnostics.Debug.WriteLine($"[MainForm] Error in update check: {ex.Message}");
                 }
             });
         };

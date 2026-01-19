@@ -40,6 +40,7 @@ internal static class UpdateChecker
 
             if (release == null || string.IsNullOrEmpty(release.TagName))
             {
+                System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Release is null or TagName is empty");
                 return null;
             }
 
@@ -47,12 +48,16 @@ internal static class UpdateChecker
             var tagVersion = release.TagName.TrimStart('v', 'V');
             if (!Version.TryParse(tagVersion, out var latestVersion))
             {
+                System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Failed to parse version from tag: {release.TagName}");
                 return null;
             }
 
             var currentVersion = GetCurrentVersion();
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Current version: {currentVersion}, Latest version: {latestVersion}");
+            
             if (latestVersion > currentVersion)
             {
+                System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Update found! {currentVersion} -> {latestVersion}");
                 return new UpdateInfo
                 {
                     Version = latestVersion,
@@ -61,12 +66,17 @@ internal static class UpdateChecker
                     ReleaseName = release.Name ?? release.TagName
                 };
             }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"[UpdateChecker] No update needed. Current: {currentVersion}, Latest: {latestVersion}");
+            }
 
             return null;
         }
-        catch
+        catch (Exception ex)
         {
-            // Silent fail - don't show errors if update check fails
+            // Log error for debugging
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Error checking for updates: {ex.Message}");
             return null;
         }
     }
