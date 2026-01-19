@@ -6,9 +6,9 @@ namespace VideoTrim;
 
 internal sealed class AppSettings
 {
-    public string InputFolder { get; set; } = @"D:\Couplefeetish\Video\New folder";
-    public string OutputFolder { get; set; } = @"D:\Couplefeetish\Video\New folder\segments";
-    public string ProcessedFolder { get; set; } = @"D:\Couplefeetish\Video\New folder\Processed Videos";
+    public string InputFolder { get; set; } = string.Empty;
+    public string OutputFolder { get; set; } = string.Empty;
+    public string ProcessedFolder { get; set; } = string.Empty;
     public int MinSeconds { get; set; } = 15;
     public int MaxSeconds { get; set; } = 20;
     public ProcessingMode Mode { get; set; } = ProcessingMode.SplitOnly;
