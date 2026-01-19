@@ -47,6 +47,7 @@ public sealed class MainForm : Form
     private AppSettings _settings = new();
 
     // GitHub update checker configuration
+    // Repository is public but contains only releases (no source code)
     private const string GitHubOwner = "kiralylorand";
     private const string GitHubRepo = "SplitThatShit";
 

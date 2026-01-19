@@ -35,7 +35,9 @@ internal static class UpdateChecker
         try
         {
             var url = $"https://api.github.com/repos/{githubOwner}/{githubRepo}/releases/latest";
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Checking URL: {url}");
             var response = await HttpClient.GetStringAsync(url);
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Response received: {response.Substring(0, Math.Min(200, response.Length))}...");
             var release = JsonSerializer.Deserialize<GitHubRelease>(response);
 
             if (release == null || string.IsNullOrEmpty(release.TagName))
@@ -73,10 +75,24 @@ internal static class UpdateChecker
 
             return null;
         }
+        catch (HttpRequestException httpEx) when (httpEx.Message.Contains("404"))
+        {
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] 404 Not Found. Possible reasons:");
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] 1. No releases published on GitHub");
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] 2. Repository is private (update checker requires public repository)");
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] 3. Repository name or owner is incorrect");
+            return null;
+        }
+        catch (HttpRequestException httpEx) when (httpEx.Message.Contains("401") || httpEx.Message.Contains("403"))
+        {
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Authentication failed (401/403). Repository might be private.");
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Update checker requires a public repository to work.");
+            return null;
+        }
         catch (Exception ex)
         {
             // Log error for debugging
-            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Error checking for updates: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"[UpdateChecker] Error checking for updates: {ex.GetType().Name} - {ex.Message}");
             return null;
         }
     }
