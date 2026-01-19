@@ -40,3 +40,7 @@ packages/
 
 # Rider
 .idea/
+
+# Source code (keep local, but don't track in Git)
+VideoTrim/*.cs
+VideoTrim/*.csproj
